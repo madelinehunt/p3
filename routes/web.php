@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
+Route::get('/piano/{rootNote}', 'PianoController@show');
+Route::get('/diatonic/{rootNote}', 'DiatonicController@show');
