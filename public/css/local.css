@@ -1,0 +1,94 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* needed for container min-height */
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#roundrect-container {
+  background-color: #d3d3d396;
+  min-height: 85%;
+  max-width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0%;
+  border-radius: 1%;
+}
+
+h1 {
+  text-align: center;
+  font-family: serif;
+  font-size: 32px;
+  padding-top: 2%;
+}
+
+#scales_title {
+  margin-bottom: 70px;
+}
+
+#options * {
+  margin-top: 2px;
+}
+
+#submit-button {
+  margin-top: 32px;
+  font-weight: bold;
+}
+
+#piano-section {
+  position: relative;
+}
+
+#piano {
+  width: 66%;
+  margin-top: 4em;
+  margin-left: 29%;
+  margin-right: auto;
+  display: flex;
+}
+
+.whitekey {
+  width: 4%;
+  height: 5.5em;
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  margin-left: -4px;
+  margin-top: 25px;
+  z-index: 1;
+}
+
+.blackkey {
+  width: 3%;
+  height: 4.5em;
+  background-color: black;
+  border-color: black;
+  border-style: solid;
+  z-index: 2;
+  margin-left: -16px;
+}
+
+.highlighted.whitekey {
+  background-color: rgba(63, 63, 191, 0.6);
+}
+
+.highlighted-root.whitekey {
+  background-color: rgba(63, 191, 63, 0.6);
+}
+
+.highlighted.blackkey {
+  background-color: hsl(240, 50%, 35%);
+}
+
+.highlighted-root.blackkey {
+  background-color: hsl(120, 50%, 22%);
+}
+
+#errors{
+  margin-top: 2%;
+  color: red;
+}

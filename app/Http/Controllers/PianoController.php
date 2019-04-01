@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class PianoController extends Controller
 {
-    public function show($rootNote='C-nat')
+    public function show($rootNote='none')
     {
-        return $rootNote;
+        return view('piano.show')->with(['rootNote' => $rootNote]);
     }
 }
