@@ -18,7 +18,7 @@
 
     {{-- @if (!isset($rootNote)) --}}
     <div id="options">
-        <form method="GET" action="/p3/public/piano/pianoProcess" >
+        <form method="GET" action="/piano/pianoProcess" >
             <label>
             Root note: <input type="text" name="root" value="{{ $inputs->root ?? 'C' }}" size="4" maxlength="1">
             </label>
@@ -77,7 +77,7 @@
             <li><div class="whitekey highlighted-root"><b>Root note</b></br>{{ $inputs->root }}</div></li>
             <li><div class="whitekey highlighted"><b>Scale tones</b></div></li>
         </ul>
-        <form method="GET" action="/p3/public" >
+        <form method="GET" action="/" >
             <input type="submit" value="Clear" id="submit-button" style="position:absolute;top:75%">
         </form>
     @endif
