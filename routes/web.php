@@ -13,4 +13,3 @@
 
 Route::get('/', 'PianoController@show');
 Route::get('/piano/pianoProcess', 'PianoController@pianoProcess');
-Route::get('/piano/{rootNote}', 'PianoController@show');

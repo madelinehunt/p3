@@ -53,7 +53,23 @@ class PianoController extends Controller
     {
         // dump($request->all());
         $params = $request->all();
+        $request->validate([
+            'root' => [
+                'required',
+                'alpha'
+            ],
+            'root_opts' => 'required',
+            'scale_type' => 'required'
+        ]);
+
         $raw_root = strtoupper($params['root']);
+        if (!in_array($raw_root, $this->nats)) {
+            return view('piano.show')->with([
+                'inputs' => $request,
+                'root_error' => $raw_root.' is not a musical note.'
+            ]);
+        }
+
         $root_mod = $params['root_opts'];
         if ($params['scale_type'] == 'minor') {
             $scale = $this->min_scale_pattern;
@@ -70,10 +86,16 @@ class PianoController extends Controller
         // $errors = $form->validate([
         //     'root' => 'required|alpha|maxLength:1'
         // ]);
-
         // dump($root);
         // dump($scale_highlights);
-
+        // return redirect('/')->with([
+        //     'rootNote' => $root,
+        //     'input_scale' => $scale,
+        //     'highlights' => $scale_highlights,
+        //     'twelve_tones' => $this->twelve_tones,
+        //     'black_keys' => $this->black_keys,
+        //     'inputs' => $request,
+        // ]);
         return view('piano.show')->with([
             'rootNote' => $root,
             'input_scale' => $scale,
