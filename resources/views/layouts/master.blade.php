@@ -3,7 +3,7 @@
 <head>
     <title>@yield('title')</title>
     <meta charset="utf-8">
-    <link href='./css/local.css' rel='stylesheet'>
+    <link href='/p3/public/css/local.css' rel='stylesheet'>
 
 </head>
 <body>
