@@ -46,22 +46,27 @@ class PianoController extends Controller
 
     public function show($rootNote='')
     {
-        return view('piano.show'); //->with(['rootNote' => $rootNote]);
+        return view('piano.show');
     }
 
     public function pianoProcess (Request $request)
     {
-        // dump($request->all());
-        $params = $request->all();
-        $request->validate([
+        // validation
+        $rules = [
             'root' => [
                 'required',
                 'alpha'
             ],
             'root_opts' => 'required',
             'scale_type' => 'required'
-        ]);
+        ];
+        $messages = [
+            'root.required' => 'The root note is required.',
+            'root.alpha' => 'The root note must be a letter of the alphabet.'
+        ];
+        $this->validate($request, $rules, $messages);
 
+        $params = $request->all();
         $raw_root = strtoupper($params['root']);
         if (!in_array($raw_root, $this->nats)) {
             return view('piano.show')->with([
@@ -70,14 +75,13 @@ class PianoController extends Controller
             ]);
         }
 
+        // input processing
         $root_mod = $params['root_opts'];
         if ($params['scale_type'] == 'minor') {
             $scale = $this->min_scale_pattern;
         } else {
             $scale = $this->maj_scale_pattern;
         }
-
-        $inNats = in_array(strtoupper($raw_root), $this->nats);
 
         $root = $this->findRoot($raw_root, $root_mod);
         $scale_highlights = $this->deriveScale($root, $scale);

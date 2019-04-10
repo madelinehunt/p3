@@ -21,8 +21,8 @@
     <div id="options">
         <form method="GET" action="/piano/pianoProcess" >
             <label>
-            Root note: <input type="text" name="root" value="{{ old('root') ?: $inputs['root'] ?: 'C' }}" size="4" maxlength="1">
-        </label>@include('snippets.req')
+                Root note: <input type="text" name="root" value="{{ old('root') ?: $inputs['root'] ?: 'C' }}" size="4" maxlength="1">
+            </label>@include('snippets.req')
             <input type="radio" name="root_opts" value="nat"
                 {{ (old('root_opts') != 'nat' || $inputs['root_opts'] != 'nat') ? 'checked' : '' }}
             >♮
