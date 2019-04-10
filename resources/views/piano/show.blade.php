@@ -106,7 +106,7 @@
 @section('post_input_explanation')
     @if (isset($rootNote) && count($errors) <= 0)
         <ul>
-            <li><div class="whitekey highlighted-root"><b>Root note</b></br>
+            <li><div class="whitekey highlighted-root"><b>Root note</b><br>
                 @if($inputs['root_opts'] == 'sharp')
                     {{ $inputs['root'].'♯' }}
                 @elseif ($inputs['root_opts'] == 'flat')
