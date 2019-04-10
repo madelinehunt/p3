@@ -96,3 +96,9 @@ h1 {
 #errors-list{
   display: inline-block;
 }
+
+.reqd{
+  color:#800000;
+  vertical-align: super;
+  font-size: 12px;
+}

@@ -65,7 +65,7 @@ class PianoController extends Controller
         $raw_root = strtoupper($params['root']);
         if (!in_array($raw_root, $this->nats)) {
             return view('piano.show')->with([
-                'inputs' => $request,
+                'inputs' => $params,
                 'root_error' => $raw_root.' is not a musical note.'
             ]);
         }
@@ -78,31 +78,18 @@ class PianoController extends Controller
         }
 
         $inNats = in_array(strtoupper($raw_root), $this->nats);
-        // dump($inNats);
 
         $root = $this->findRoot($raw_root, $root_mod);
         $scale_highlights = $this->deriveScale($root, $scale);
 
-        // $errors = $form->validate([
-        //     'root' => 'required|alpha|maxLength:1'
-        // ]);
-        // dump($root);
-        // dump($scale_highlights);
-        // return redirect('/')->with([
-        //     'rootNote' => $root,
-        //     'input_scale' => $scale,
-        //     'highlights' => $scale_highlights,
-        //     'twelve_tones' => $this->twelve_tones,
-        //     'black_keys' => $this->black_keys,
-        //     'inputs' => $request,
-        // ]);
         return view('piano.show')->with([
             'rootNote' => $root,
-            'input_scale' => $scale,
+            'rootMod' => $root_mod,
+            'scaleType' => $params['scale_type'],
             'highlights' => $scale_highlights,
             'twelve_tones' => $this->twelve_tones,
             'black_keys' => $this->black_keys,
-            'inputs' => $request,
+            'inputs' => $params,
         ]);
 
     }

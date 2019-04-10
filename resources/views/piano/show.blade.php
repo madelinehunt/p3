@@ -13,16 +13,28 @@
 @endsection
 
 @section('input_form')
+    @if (!isset($inputs))
+        <!-- convenience to help with ternery operators -->
+        @php ($inputs = ['root'=>null,'scale_type'=>null,'root_opts'=>null])
+    @endif
 
     <div id="options">
         <form method="GET" action="/piano/pianoProcess" >
             <label>
-            Root note: <input type="text" name="root" value="{{ $inputs->root ?? 'C' }}" size="4" maxlength="1">
-            </label>
-            <input type="radio" name="root_opts" value="nat" @if( isset($inputs) && $inputs->root_opts != 'nat'){{ "" }} @else {{ "checked" }} @endif>♮
-            <input type="radio" name="root_opts" value="sharp" @if(isset($inputs) && $inputs->root_opts == 'sharp'){{ "checked" }} @endif>♯
-            <input type="radio" name="root_opts" value="flat" @if(isset($inputs) && $inputs->root_opts == 'flat'){{ "checked" }} @endif>♭<br>
+            Root note: <input type="text" name="root" value="{{ old('root') ?: $inputs['root'] ?: 'C' }}" size="4" maxlength="1">
+        </label>@include('snippets.req')
+            <input type="radio" name="root_opts" value="nat"
+                {{ (old('root_opts') != 'nat' || $inputs['root_opts'] != 'nat') ? 'checked' : '' }}
+            >♮
+            <input type="radio" name="root_opts" value="sharp"
+                {{ (old('root_opts') == 'sharp' || $inputs['root_opts'] == 'sharp') ? 'checked' : ''  }}
+            >♯
+            <input type="radio" name="root_opts" value="flat"
+                {{ (old('root_opts') == 'flat' || $inputs['root_opts'] == 'flat') ? 'checked' : ''  }}
+             >♭@include('snippets.req')
+             <br>
             <br>
+
             @if (isset($root_error))
                 <ul id="errors-list">
                     <li class="errors">{{ $root_error }}</li>
@@ -36,13 +48,24 @@
                 </ul>
                 <br>
             @endif
+
             <select name="scale_type">
                 <option value="major">Major</option>
-                <option value="minor" @if(isset($inputs) && $inputs->scale_type == 'minor'){{ "selected" }} @endif>Minor</option>
-            </select>
+                <option value="minor"
+                    {{ (old('scale_type') == 'minor' || $inputs['scale_type'] == 'minor') ? 'selected' : '' }}
+                >Minor</option>
+            </select>@include('snippets.req')
             <br>
+            @if(!isset($rootNote))
+                <br>
+                <br>
+            @endif
             <input type="submit" value="Submit" id="submit-button">
         </form>
+        @if(!isset($rootNote))
+            <br>
+            <div id="req-explanation">@include('snippets.req')required</div>
+        @endif
     </div>
 
 @endsection
@@ -83,12 +106,17 @@
 @section('post_input_explanation')
     @if (isset($rootNote) && count($errors) <= 0)
         <ul>
-            <li><div class="whitekey highlighted-root"><b>Root note</b></br>{{$inputs->root}}@if($inputs->root_opts =='sharp') {{'♯'}}@elseif ($inputs->root_opts =='flat'){{'♭'}}@endif</div></li>
+            <li><div class="whitekey highlighted-root"><b>Root note</b></br>
+                @if($inputs['root_opts'] == 'sharp')
+                    {{ $inputs['root'].'♯' }}
+                @elseif ($inputs['root_opts'] == 'flat')
+                    {{ $inputs['root'].'♭' }}
+                @else
+                    {{ $inputs['root'] }}
+                @endif
+            </div></li>
             <li><div class="whitekey highlighted"><b>Scale tones</b></div></li>
         </ul>
-        <form method="GET" action="/" >
-            <input type="submit" value="Clear" id="submit-button" style="position:absolute;top:75%">
-        </form>
     @endif
 
 @endsection
